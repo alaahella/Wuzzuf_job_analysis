@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Job Count</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+
+    <script src="/js/main.js?v=6"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+
+<body>
+
+<h1></h1>
+<div style="width: 800px; height: 600px; ">
+    <table id="jobsTable" class="display">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Company</th>
+            <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job: ${jobList}">
+            <td></td>
+            <td th:text="${job.getString(0)}"></td>
+            <td th:text="${job.get(1).toString()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div id="chartContainer" style="margin: auto; width: 50%;"></div>
+<script th:inline="javascript">
+
+    // this simply wraps the code in a function
+    // that waits for the DOM to be ready:
+    (function () {
+
+        // this is populated by Thymeleaf:
+        var pieChartData = /*[[${companiesList}]]*/ [];
+        var countData = [[${countList}]];
+        // console.log(countData);
+        // console.log(pieChartData);
+        var series = [];
+        var data = [];
+
+        for (var i = 0; i < pieChartData.length; i++) {
+            var object = {};
+            // object.name = pieChartData[i].catName.toUpperCase();
+            object.name = pieChartData[i];
+            object.y = countData[i];
+            data.push(object);
+        }
+        var seriesObject = {
+            name: 'Course By Category',
+            colorByPoint: true,
+            data: data
+        };
+        series.push(seriesObject);
+        drawPieChart(series);
+
+        // draw the pie chart:
+        function drawPieChart(series) {
+            Highcharts.chart('chartContainer', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Most Demanding Companies For Jobs?'
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<strong>' + this.key + ': </strong>' + this.y;
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.y}'
+                        }
+                    }
+                },
+                // use the series data defined earlier:
+                series: series
+            });
+        }
+
+    })();
+
+</script>
+
+
+</body>
+
+</html>

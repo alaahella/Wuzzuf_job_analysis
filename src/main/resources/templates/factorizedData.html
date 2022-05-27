@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Job Count</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+
+    <script src="/js/main.js?v=6"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+
+<body>
+
+<h1></h1>
+<div style="width: 800px; height: 600px; ">
+    <table id="jobsTable" class="display">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Type</th>
+            <th>Level</th>
+            <th>YearsExp</th>
+            <th>Country</th>
+            <th>Skills</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item: ${indexedList}">
+            <td></td>
+            <td th:text="${item.getString(0)}"></td>
+            <td th:text="${item.getString(1)}"></td>
+            <td th:text="${item.getString(2)}"></td>
+            <td th:text="${item.getString(3)}"></td>
+            <td th:text="${item.getString(4)}"></td>
+            <td th:text="${item.get(8).toString()}"></td>
+            <td th:text="${item.getString(6)}"></td>
+            <td th:text="${item.getString(7)}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+</body>
+
+</html>

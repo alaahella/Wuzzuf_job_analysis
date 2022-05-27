@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Job Count</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="/js/main.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+</head>
+
+
+<body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<h1></h1>
+<div style="width: 800px; height: 600px; ">
+    <table id="jobsTable" class="display">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Location</th>
+            <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="area: ${areasList}">
+            <td></td>
+            <td th:text="${area.getString(0)}"></td>
+            <td th:text="${area.get(1).toString()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div id="chartContainer" style="margin: auto; width: 50%; height: 700px;"></div>
+<script th:inline="javascript">
+    $(function(){
+        Highcharts.chart('chartContainer', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Popular Areas'
+            },
+            subtitle: {
+                text: 'Details'
+            },
+            xAxis: {
+                categories: [[${locationList}]],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                max:600,
+                title: {
+                    text: 'Count'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Location',
+                data: [[${countList}]]
+            }]
+        });
+    });
+</script>
+
+</body>
+
+</html>

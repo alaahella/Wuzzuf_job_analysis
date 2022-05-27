@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Show Summary</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="/js/main.js"></script>
+</head>
+
+
+<body>
+<h1></h1>
+<table id="jobsTable" class="display">
+    <thead>
+    <tr>
+        <th>Summary</th>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Location</th>
+        <th>Type</th>
+        <th>Level</th>
+        <th>YearsExp</th>
+        <th>Country</th>
+        <th>Skills</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item:${summary}">
+        <td th:text="${item.getString(0)}"></td>
+        <td th:text="${item.getString(1)}"></td>
+        <td th:text="${item.getString(2)}"></td>
+        <td th:text="${item.getString(3)}"></td>
+        <td th:text="${item.getString(4)}"></td>
+        <td th:text="${item.getString(5)}"></td>
+        <td th:text="${item.getString(6)}"></td>
+        <td th:text="${item.getString(7)}"></td>
+        <td th:text="${item.getString(8)}"></td>
+    </tr>
+    </tbody>
+</table>
+<div th:each="item : ${structure}">
+    <p th:text="${item}"></p>
+</div>
+<!--<h3 th:text="${structure}"></h3>-->
+</body>
+</html>
